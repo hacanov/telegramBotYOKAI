@@ -1,24 +1,9 @@
 import telebot;
+from telebot import types
 
 bot = telebot.TeleBot('6230307816:AAFykI7EAk49yFK5oSJGtfMZZhAt7r6dLnI')
 
 @bot.message_handler(content_types=['text', 'document', 'audio'])
-def get_text_messages(message):
-    if  message.text == "привет":
-        bot.send_message(message.from_user.id, "Привет, чем я могу тебе помочь?")
-    elif message.text == "/help":
-        bot.send_message(message.from_user.id, "Напиши привет")
-    else:
-        bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /help.")
-
-bot.polling(none_stop=True, interval=0)
-
-name = ''
-surname = ''
-age = 0
-
-@bot.message_handler(content_types=['text'])
-
 def start(message):
     if message.text == '/reg':
         bot.send_message(message.from_user.id, "Как тебя зовут?")
@@ -71,4 +56,19 @@ def callback_worker(call):
         bot.send_message(call.message.chat.id, 'Запомню :)')
     else: call.data == "no"
 
-from telebot import types
+def get_text_messages(message):
+    if  message.text == "привет":
+        bot.send_message(message.from_user.id, "Привет, чем я могу тебе помочь?")
+    elif message.text == "/reg":
+        start(message)
+    elif message.text == "/help":
+        bot.send_message(message.from_user.id, "Напиши привет")
+    else:
+        bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /help.")
+
+bot.polling(none_stop=True, interval=0)
+
+name = ''
+surname = ''
+age = 0
+
